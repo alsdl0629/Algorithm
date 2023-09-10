@@ -18,8 +18,7 @@ int main() {
         } else if (str == "size") {
             cout << S.size() << "\n";
         } else if (str == "empty") {
-            if (S.empty()) cout << 1 << "\n";
-            else cout << 0 << "\n";
+            cout << (int)S.empty() << "\n";
         } else if (str == "pop") {
             if (!S.empty()) {
                 cout << S.top() << "\n";
