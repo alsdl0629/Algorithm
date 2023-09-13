@@ -1,16 +1,6 @@
 class Solution {
-    fun solution(num_list: IntArray): Int {
-    var result = 1
-    if (num_list.size > 10) {
-        num_list.forEach {
-            result += it
-        }
-        result -= 1
-    } else {
-        num_list.forEach {
-            result *= it
-        }
+    fun solution(num_list: IntArray) = when {
+        num_list.size > 10 -> num_list.sum()
+        else -> num_list.fold(1) {total, num -> total * num}
     }
-    return result
-}
 }
