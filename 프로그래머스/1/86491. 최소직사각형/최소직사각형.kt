@@ -1,22 +1,13 @@
+import kotlin.math.max
+import kotlin.math.min
 class Solution {
     fun solution(sizes: Array<IntArray>): Int {
-        var arr = Array(sizes.size) { IntArray(2) }
-        sizes.mapIndexed { index, ints ->
-            if (ints[0] >= ints[1]) {
-                arr[index][0] = ints[0]
-                arr[index][1] = ints[1]
-            }
-            else {
-                arr[index][0] = ints[1]
-                arr[index][1] = ints[0]
-            }
+        var maxWidth = -999
+        var maxHeight = -999
+        sizes.map {
+            maxWidth = max(max(it[0], it[1]), maxWidth)
+            maxHeight = max(min(it[0], it[1]), maxHeight)
         }
-        var wMax = -999
-        var hMax = -999
-        arr.map {
-            if (it[0] > wMax) wMax = it[0]
-            if (it[1] > hMax) hMax = it[1]
-        }
-        return wMax * hMax
+        return maxHeight * maxWidth
     }
 }
