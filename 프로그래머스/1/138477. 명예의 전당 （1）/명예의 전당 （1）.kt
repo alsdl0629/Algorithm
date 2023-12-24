@@ -2,16 +2,13 @@ import java.util.PriorityQueue
 class Solution {
     fun solution(k: Int, score: IntArray): IntArray {
         var answer: IntArray = intArrayOf()
-        val PQ = PriorityQueue<Int>(reverseOrder())
+        val PQ = PriorityQueue<Int>()
         score.map {
             if (PQ.size == k) {
-                val min = PQ.minOrNull()!!
-                if (min < it) {
-                    PQ.remove(min)
-                    PQ.add(it)
-                }
+                PQ.add(it)
+                PQ.remove()
             } else PQ.add(it)
-            answer += PQ.minOrNull()!!
+            answer += PQ.peek()
         }
         return answer
     }
