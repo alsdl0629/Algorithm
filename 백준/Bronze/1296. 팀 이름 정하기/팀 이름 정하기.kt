@@ -26,17 +26,8 @@ fun main() {
         list += Pair(teamName, result)
     }
 
-    var max = -99999
-    val maxList = mutableListOf<Pair<String, Int>>()
-    list.map {
-        if (it.second >= max) {
-            maxList += it
-            max = it.second
-        }
-    }
-
-    maxList.sortWith(compareByDescending { it.second })
-    val b = maxList.filter { it.second == maxList.maxOf { it.second } }
+    list.sortWith(compareByDescending { it.second })
+    val b = list.filter { it.second == list.maxOf { it.second } }
         .map { it.first }
         .toMutableList()
     b.sort()
