@@ -26,7 +26,6 @@ fun main() {
         list += Pair(teamName, result)
     }
 
-    list.sortWith(compareByDescending { it.second })
     val b = list.filter { it.second == list.maxOf { it.second } }
         .map { it.first }
         .toMutableList()
