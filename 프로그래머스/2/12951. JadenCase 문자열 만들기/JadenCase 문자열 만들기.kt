@@ -5,8 +5,7 @@ class Solution {
 
         var idx = 1
         while (idx != s.length) {
-            if (s[idx] == ' ') sb.append(' ')
-            else if (s[idx - 1] == ' ') sb.append("${s[idx].uppercaseChar()}")
+            if (s[idx - 1] == ' ') sb.append("${s[idx].uppercaseChar()}")
             else sb.append(s[idx].lowercaseChar())
             idx++
         }
