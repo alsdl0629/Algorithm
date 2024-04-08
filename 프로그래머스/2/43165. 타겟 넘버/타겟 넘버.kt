@@ -1,20 +1,18 @@
 class Solution {
     private var result = 0
-    private lateinit var array: IntArray
 
-    private fun dfs(total: Int, idx: Int, target: Int) {
-        if (idx == array.size) {
+    private fun dfs(total: Int, idx: Int, target: Int, numbers: IntArray) {
+        if (idx == numbers.size) {
             if (total == target) result++
-        }
-        else {
-            dfs(total + array[idx], idx + 1, target)
-            dfs(total - array[idx], idx + 1, target)
+        } else {
+            dfs(total + numbers[idx], idx + 1, target, numbers)
+            dfs(total - numbers[idx], idx + 1, target, numbers)
         }
     }
 
     fun solution(numbers: IntArray, target: Int): Int {
-        array = numbers
-        dfs(0, 0, target)
+        dfs(0, 0, target, numbers)
+
         return result
     }
 }
