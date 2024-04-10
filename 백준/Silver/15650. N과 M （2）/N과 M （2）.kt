@@ -1,3 +1,6 @@
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.util.StringTokenizer
 private lateinit var numbers: IntArray
 private val sb = StringBuilder()
 fun dfs(at: Int, step: Int, n: Int, m: Int) {
@@ -12,7 +15,10 @@ fun dfs(at: Int, step: Int, n: Int, m: Int) {
     }
 }
 fun main() {
-    val (n, m) = readln().split(" ").map { it.toInt() }
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val token = StringTokenizer(br.readLine())
+    val n = token.nextToken().toInt()
+    val m = token.nextToken().toInt()
     numbers = IntArray(m)
     dfs(1, 0, n, m)
     println(sb)
