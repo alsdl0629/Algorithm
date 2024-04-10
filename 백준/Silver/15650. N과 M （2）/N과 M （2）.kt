@@ -1,8 +1,9 @@
 private lateinit var numbers: IntArray
+private val sb = StringBuilder()
 fun dfs(at: Int, step: Int, n: Int, m: Int) {
     if (step == m) {
-        for (i in numbers.indices) print("${numbers[i]} ")
-        println()
+        for (i in numbers.indices) sb.append("${numbers[i]} ")
+        sb.append("\n")
     } else {
         for (i in at .. n) {
             numbers[step] = i
@@ -12,7 +13,7 @@ fun dfs(at: Int, step: Int, n: Int, m: Int) {
 }
 fun main() {
     val (n, m) = readln().split(" ").map { it.toInt() }
-
     numbers = IntArray(m)
     dfs(1, 0, n, m)
+    println(sb)
 }
