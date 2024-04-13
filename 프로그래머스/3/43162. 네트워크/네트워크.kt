@@ -1,27 +1,24 @@
 class Solution {
     private lateinit var visited: BooleanArray
 
-    fun dfs(computers: Array<IntArray>, idx: Int) {
-        visited[idx] = true
-
+    fun solution(n: Int, computers: Array<IntArray>): Int {
+        visited = BooleanArray(n)
+        var cnt = 0
         for (i in computers.indices) {
-            if (computers[idx][i] == 1 && !visited[i]) {
-                dfs(computers, i)
+            if (!visited[i]) {
+                dfs(i, computers)
+                cnt++
             }
         }
+        return cnt
     }
 
-    fun solution(n: Int, computers: Array<IntArray>): Int {
-        var answer = 0
-        visited = BooleanArray(n) { false }
-
-
-        for (i in 0 until n) {
-            if (!visited[i]) {
-                dfs(computers, i)
-                answer++
+    fun dfs(n: Int, computers: Array<IntArray>) {
+        for (i in computers[n].indices) {
+            if (!visited[i] && computers[n][i] == 1) {
+                visited[n] = true
+                dfs(i, computers)
             }
         }
-        return answer
     }
 }
