@@ -7,14 +7,9 @@ class Solution {
             val split = it.split(" ")
             when (split[0]) {
                 "Enter", "Change" -> {
-                    if (map[split[1]] != null) {
-                        map.remove(split[1])
-                        map[split[1]] = split[2]
-                    }
-                    else map[split[1]] = split[2]
+                    map[split[1]] = split[2]
                 }
             }
-
         }
 
         record.forEach {
