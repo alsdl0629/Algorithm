@@ -6,10 +6,7 @@ class Solution {
         var answer = 0
         dfs("")
 
-        result.forEach { 
-            if (it == word) return answer
-            answer++
-        }
+        result.forEachIndexed { index, s -> if (s == word) return index }
         return answer
     }
 
