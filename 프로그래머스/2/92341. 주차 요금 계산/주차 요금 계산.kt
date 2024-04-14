@@ -1,6 +1,6 @@
 import kotlin.math.ceil
 class Solution {
-fun solution(fees: IntArray, records: Array<String>): IntArray {
+    fun solution(fees: IntArray, records: Array<String>): IntArray {
         val answer = mutableListOf<Pair<String, Int>>() // first: 차량 번호, second: 총 요금
         val defaultTime = fees[0]
         val defaultMoney = fees[1]
@@ -18,77 +18,60 @@ fun solution(fees: IntArray, records: Array<String>): IntArray {
         map.entries.forEach { carInfo ->
             var totalTime: Double = 0.0
             val size = carInfo.value.size
-            if (size % 2 == 0) {
-                for (i in 0 until size step 2) {
-                    var h1 = 0
-                    var m1 = 0
-                    var h2 = 0
-                    var m2 = 0
-
+            var startHour = 0
+            var startMinute = 0
+            var endHour = 0
+            var endMinute = 0
+            for (i in 0 until size step 2) {
+                if (size % 2 != 0 && i + 1 == size) {
                     carInfo.value[i].first.split(":").apply {
-                        h1 = this[0].toInt()
-                        m1 = this[1].toInt()
+                        startHour = this[0].toInt()
+                        startMinute = this[1].toInt()
+                    }
+                    endHour = 23
+                    endMinute = 59
+                } else {
+                    carInfo.value[i].first.split(":").apply {
+                        startHour = this[0].toInt()
+                        startMinute = this[1].toInt()
                     }
                     carInfo.value[i + 1].first.split(":").apply {
-                        h2 = this[0].toInt()
-                        m2 = this[1].toInt()
+                        endHour = this[0].toInt()
+                        endMinute = this[1].toInt()
                     }
+                }
 
-                    if (h2 == h1) totalTime += m2 - m1
-                    else if (h2 > h1) {
-                        if (m2 >= m1) {
-                            val tmpM = m2 - m1
-                            val tmpH = (h2 - h1) * 60
-                            totalTime += tmpH + tmpM
-                        } else {
-                            val tmpM = 60 - m1 + m2
-                            val tmpH = (h2 - h1 - 1) * 60
-                            totalTime += tmpH + tmpM
-                        }
-                    }
-                }
-            } else {
-                for (i in 0 until size step 2) {
-                    var h1 = 0
-                    var m1 = 0
-                    var h2 = 0
-                    var m2 = 0
-                    if (i + 1 == size) {
-                        carInfo.value[i].first.split(":").apply {
-                            h1 = this[0].toInt()
-                            m1 = this[1].toInt()
-                        }
-                        h2 = 23
-                        m2 = 59
-                    } else {
-                        carInfo.value[i].first.split(":").apply {
-                            h1 = this[0].toInt()
-                            m1 = this[1].toInt()
-                        }
-                        carInfo.value[i + 1].first.split(":").apply {
-                            h2 = this[0].toInt()
-                            m2 = this[1].toInt()
-                        }
-                    }
-                    if (h2 == h1) totalTime += m2 - m1
-                    else if (h2 > h1) {
-                        if (m2 >= m1) {
-                            val tmpM = m2 - m1
-                            val tmpH = (h2 - h1) * 60
-                            totalTime += tmpH + tmpM
-                        } else {
-                            val tmpM = 60 - m1 + m2
-                            val tmpH = (h2 - h1 - 1) * 60
-                            totalTime += tmpH + tmpM
-                        }
-                    }
-                }
+                totalTime = calculateTotalTime(endHour, startHour, totalTime, endMinute, startMinute)
             }
+
             if (totalTime > defaultTime) {
-                val ceil = ceil((totalTime - defaultTime) / unitTime)  * unitMoney
+                val ceil = ceil((totalTime - defaultTime) / unitTime) * unitMoney
                 answer += Pair(carInfo.key, (defaultMoney + ceil).toInt())
             } else answer += Pair(carInfo.key, defaultMoney)
         }
         return answer.sortedBy { it.first }.map { it.second }.toIntArray()
+    }
+
+    private fun calculateTotalTime(
+        endHour: Int,
+        startHour: Int,
+        totalTime: Double,
+        endMinute: Int,
+        startMinute: Int,
+    ): Double {
+        var result = totalTime
+        if (endHour == startHour) result += endMinute - startMinute
+        else if (endHour > startHour) {
+            if (endMinute >= startMinute) {
+                val tmpM = endMinute - startMinute
+                val tmpH = (endHour - startHour) * 60
+                result += tmpH + tmpM
+            } else {
+                val tmpM = 60 - startMinute + endMinute
+                val tmpH = (endHour - startHour - 1) * 60
+                result += tmpH + tmpM
+            }
+        }
+        return result
     }
 }
