@@ -6,9 +6,12 @@ fun main() = with(System.`in`.bufferedReader()) {
     dp[1] = stair[1]
     dp[2] = stair[1] + stair[2]
     dp[3] = maxOf(stair[1] + stair[3], stair[2] + stair[3])
-    for (i in 4..n) {
-        val current = stair[i]
-        dp[i] = maxOf(dp[i - 3] + stair[i - 1] + current, dp[i - 2] + current)
+    if (n <= 3) println(dp[n])
+    else {
+        for (i in 4..n) {
+            val current = stair[i]
+            dp[i] = maxOf(dp[i - 3] + stair[i - 1] + current, dp[i - 2] + current)
+        }
+        println(dp[n])
     }
-    println(dp[n])
 }
