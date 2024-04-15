@@ -15,7 +15,7 @@ class Solution {
     }
 
     private fun dfs(numbers: String, s: String, depth: Int) {
-        if (depth > numbers.length) return
+        if (depth == numbers.length) return
         else {
             for (i in numbers.indices) {
                 if (!visited[i]) {
