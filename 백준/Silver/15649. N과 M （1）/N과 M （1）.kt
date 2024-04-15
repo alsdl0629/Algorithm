@@ -1,18 +1,14 @@
 private lateinit var visited: BooleanArray
-private lateinit var numbers: IntArray
-
-fun dfs(step: Int, n: Int, m: Int) {
+fun dfs(step: Int, n: Int, m: Int, s: String) {
     if (step == m) {
-        for (i in numbers.indices) print("${numbers[i]} ")
-        println()
+        println(s.trim())
     }
     else {
-        for (i in 0 until n) {
-            if (!visited[i]) {
-                visited[i] = true
-                numbers[step] = i + 1
-                dfs(step + 1, n, m)
-                visited[i] = false
+        for (i in 1.. n) {
+            if (!visited[i - 1]) {
+                visited[i - 1] = true
+                dfs(step + 1, n, m, "$s $i")
+                visited[i - 1] = false
             }
         }
     }
@@ -22,6 +18,5 @@ fun main() {
     val (n, m) = readln().split(" ").map { it.toInt() }
 
     visited = BooleanArray(n)
-    numbers = IntArray(m)
-    dfs(0, n, m)
+    dfs(0, n, m, "")
 }
