@@ -1,8 +1,20 @@
 private lateinit var visited: BooleanArray
-fun dfs(step: Int, n: Int, m: Int, s: String) {
-    if (step == m) {
-        println(s.trim())
+private val sb = StringBuilder()
+fun main() = with(System.`in`.bufferedReader()) {
+    var n = 0
+    var m = 0
+    readln().split(" ").apply {
+        n = this[0].toInt()
+        m = this[1].toInt()
     }
+    visited = BooleanArray(n)
+    dfs(0, n, m, "")
+    println(sb)
+}
+
+
+private fun dfs(step: Int, n: Int, m: Int, s: String) {
+    if (step == m) sb.append(s.trim()).append("\n")
     else {
         for (i in 1.. n) {
             if (!visited[i - 1]) {
@@ -12,11 +24,4 @@ fun dfs(step: Int, n: Int, m: Int, s: String) {
             }
         }
     }
-}
-
-fun main() {
-    val (n, m) = readln().split(" ").map { it.toInt() }
-
-    visited = BooleanArray(n)
-    dfs(0, n, m, "")
 }
