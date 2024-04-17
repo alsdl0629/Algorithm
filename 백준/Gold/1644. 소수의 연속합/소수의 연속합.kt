@@ -9,12 +9,9 @@ fun main() = with(System.`in`.bufferedReader()) {
     var end = 0
     var total = 0
     var count = 0
-    val arr = mutableListOf<Int>()
-    for (i in 2..n) {
-        if (isPrime(i)) arr += i
-    }
-
+    val arr = getPrimeNumbers(n)
     val size = arr.size
+
     while (true) {
         if (total >= n) { // 누적합이 n보다 클 때
             if (total == n) count++ // 누적합이 n과 같을 때
@@ -29,9 +26,15 @@ fun main() = with(System.`in`.bufferedReader()) {
     }
 }
 
-private fun isPrime(n: Int): Boolean {
-    for (i in 2..sqrt(n.toDouble()).toInt()) {
-        if (n % i == 0) return false
+private fun getPrimeNumbers(n: Int): List<Int> {
+    val isPrime = BooleanArray(n + 1) { true }
+    isPrime[0] = false
+    isPrime[1] = false
+    val sqrt = sqrt(n.toDouble()).toInt()
+
+    for (i in 2..sqrt) {
+        if (isPrime[i]) for (j in i * i..n step i) isPrime[j] = false
     }
-    return true
+
+    return isPrime.indices.filter { isPrime[it] }
 }
