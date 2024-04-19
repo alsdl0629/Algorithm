@@ -1,18 +1,24 @@
 class Solution {
     fun solution(sequence: IntArray, k: Int): IntArray {
-        val size = sequence.size
-        val arr = mutableListOf<Triple<Int, Int, Int>>()
-        var total = 0
+        var start = 0
         var end = 0
-        for (start in 0 until size) {
-            while (k > total && size > end) {
-                total += sequence[end]
-                end++
+        var total = 0
+        val arr = mutableListOf<Triple<Int, Int, Int>>()
+        val size = sequence.size
+
+        while (true) {
+            if (k > total) {
+                if (end == size) break
+                total += sequence[end++]
             }
-            if (k == total) arr += Triple(start, end - 1, end - start - 1)
-            total -= sequence[start]
+            else if (k < total) total -= sequence[start++]
+            else {
+                arr.add(Triple(start, end - 1, end - start))
+                total -= sequence[start++]
+            }
         }
-        val first = arr.sortedWith(compareBy { it.third }).first()
-        return intArrayOf(first.first, first.second)
+
+        val min = arr.sortedBy { it.third }[0]
+        return intArrayOf(min.first, min.second)
     }
 }
