@@ -6,7 +6,7 @@ fun main() = with(System.`in`.bufferedReader()) {
     val sb = StringBuilder()
 
     arr2.forEach {
-        if (it in arr1) sb.append("1\n") else sb.append("0\n")
+        if (arr1.contains(it)) sb.append("1\n") else sb.append("0\n")
     }
     println(sb)
 }
