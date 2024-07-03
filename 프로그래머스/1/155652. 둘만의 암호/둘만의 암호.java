@@ -1,24 +1,14 @@
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
     public String solution(String s, String skip, int index) {
         StringBuilder answer = new StringBuilder();
-        int sLen = s.length();
-        int skipLen = skip.length();
-        Set<Integer> skips = new HashSet<>();
-        for (int i = 0; i < skipLen; i++) skips.add(skip.charAt(i) - 'a');
+        int len = s.length();
 
-        for (int i = 0; i < sLen; i++) {
+        for (int i = 0; i < len; i++) {
             int num = s.charAt(i) - 'a';
             int j = 0;
             while (j < index) {
-                num++;
-                if (num > 25) num = 0;
-                int finalNum = num;
-                boolean result = skips.stream().anyMatch(a -> finalNum == a);
-                if (result) continue;
-                else j++;
+                num = num >= 25 ? 0 : num + 1;
+                if (!skip.contains(String.valueOf((char) (num + 'a')))) j++;
             }
             answer.append((char) (num + 'a'));
         }
